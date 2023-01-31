@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,13 +14,29 @@ public class Server {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
 
-            String mensaje = "Hola "+ new String(packet.getData());
+            byte[] buffer2 = new byte[64];
+
+            DatagramPacket packet2 = new DatagramPacket(buffer2, buffer2.length);
+
+            socket.receive(packet2);
+
+            String mensaje = new String(packet.getData());
 
             byte[] bufferSalida = mensaje.getBytes();
 
             DatagramPacket packetSalida = new DatagramPacket(bufferSalida, bufferSalida.length, packet.getAddress(), packet.getPort());
 
             socket.send(packetSalida);
+
+
+            String mensaje2 = new String(packet2.getData());
+
+            byte[] bufferSalida2 = mensaje2.getBytes();
+
+            DatagramPacket packetSalida2 = new DatagramPacket(bufferSalida2, bufferSalida2.length, packet.getAddress(), packet.getPort());
+
+            socket.send(packetSalida2);
+
 
 
         }catch (SocketException e){
